@@ -1,22 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
-  </head>
-  <body>
-    <h1>Rock Paper Scissors Game</h1>
-    <form action="/play" method="post">
-      <label>
+</head>
+<body>
+    <h1>Rock Paper Scissors</h1>
+    <label>
         Choose:
-        <select name="choice">
-          <option value="rock">Rock</option>
-          <option value="paper">Paper</option>
-          <option value="scissors">Scissors</option>
+        <select id="choice">
+            <option value="rock">Rock</option>
+            <option value="paper">Paper</option>
+            <option value="scissors">Scissors</option>
         </select>
-      </label>
-      <button type="submit">Play</button>
-    </form>
-  </body>
+    </label>
+    <button onclick="playGame()">Play</button>
+
+    <h2 id="result"></h2>
+
+    <script>
+        function playGame() {
+            const choices = ["rock", "paper", "scissors"];
+            const playerChoice = document.getElementById("choice").value;
+            const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+            
+            let result = "";
+            if (playerChoice === computerChoice) {
+                result = "It's a tie!";
+            } else if (
+                (playerChoice === "rock" && computerChoice === "scissors") ||
+                (playerChoice === "paper" && computerChoice === "rock") ||
+                (playerChoice === "scissors" && computerChoice === "paper")
+            ) {
+                result = "You win!";
+            } else {
+                result = "You lose!";
+            }
+
+            document.getElementById("result").innerText = 
+                `You chose: ${playerChoice}, Computer chose: ${computerChoice}. ${result}`;
+        }
+    </script>
+</body>
 </html>
