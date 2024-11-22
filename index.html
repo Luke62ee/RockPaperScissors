@@ -4,42 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
+    <style>
+        body {
+            font-family: monospace;
+            text-align: center;
+            margin-top: 50px;
+        }
+        pre {
+            font-size: 1em;
+            white-space: pre-wrap;
+            line-height: 1.2em;
+        }
+        select, button {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 1em;
+        }
+        #result {
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Rock Paper Scissors</h1>
-    <label>
-        Choose:
+    <h1>Rock Paper Scissors Game</h1>
+    
+    <div>
+        <label for="choice">Choose:</label>
         <select id="choice">
-            <option value="rock">Rock</option>
-            <option value="paper">Paper</option>
-            <option value="scissors">Scissors</option>
+            <option value="0">Rock</option>
+            <option value="1">Paper</option>
+            <option value="2">Scissors</option>
         </select>
-    </label>
+    </div>
     <button onclick="playGame()">Play</button>
 
-    <h2 id="result"></h2>
+    <div id="game">
+        <h2>Your Choice:</h2>
+        <pre id="player-ascii"></pre>
+        <h2>Computer's Choice:</h2>
+        <pre id="computer-ascii"></pre>
+    </div>
+
+    <div id="result"></div>
 
     <script>
+        const gameImages = [
+            `    _______
+---'   ____)
+      (_____)
+      (_____)
+      (____)
+---.__(___)`,
+            `    _______
+---'   ____)____
+          ______)
+          _______)
+         _______)
+---.__________)`,
+            `    _______
+---'   ____)____
+          ______)
+       __________)
+      (____)
+---.__(___)`
+        ];
+
         function playGame() {
-            const choices = ["rock", "paper", "scissors"];
-            const playerChoice = document.getElementById("choice").value;
-            const computerChoice = choices[Math.floor(Math.random() * choices.length)];
-            
+            const playerChoice = parseInt(document.getElementById("choice").value);
+            const computerChoice = Math.floor(Math.random() * 3);
+
+            // 更新 ASCII 圖案
+            document.getElementById("player-ascii").innerText = gameImages[playerChoice];
+            document.getElementById("computer-ascii").innerText = gameImages[computerChoice];
+
+            // 判斷勝負
             let result = "";
             if (playerChoice === computerChoice) {
-                result = "It's a tie!";
+                result = "It's a draw!";
             } else if (
-                (playerChoice === "rock" && computerChoice === "scissors") ||
-                (playerChoice === "paper" && computerChoice === "rock") ||
-                (playerChoice === "scissors" && computerChoice === "paper")
+                (playerChoice === 0 && computerChoice === 2) ||
+                (playerChoice === 1 && computerChoice === 0) ||
+                (playerChoice === 2 && computerChoice === 1)
             ) {
                 result = "You win!";
             } else {
                 result = "You lose!";
             }
 
-            document.getElementById("result").innerText = 
-                `You chose: ${playerChoice}, Computer chose: ${computerChoice}. ${result}`;
+            // 顯示結果
+            document.getElementById("result").innerText = result;
         }
     </script>
 </body>
